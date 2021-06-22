@@ -1,0 +1,22 @@
+name: test
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  test:
+    name: test
+    strategy:
+      matrix:
+        os:
+          - macos-10.15
+          - macos-11
+          - macos-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - run: curl -LO https://raw.githubusercontent.com/GiovanniBussi/macports-ci/master/macports-ci
+      - run: source ./macports-ci install
+      - run: sudo port install fzf
+      - run: fzf --version
+
